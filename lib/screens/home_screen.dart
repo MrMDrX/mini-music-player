@@ -7,8 +7,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Mini Music Player'),
+        title: const Text(
+          'PLAYLIST',
+          style: TextStyle(
+            letterSpacing: 4,
+          ),
+        ),
+        centerTitle: true,
       ),
       drawer: const AppDrawer(),
       body: const Center(

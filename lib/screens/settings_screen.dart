@@ -9,21 +9,19 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(
+          "SETTINGS",
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.inversePrimary,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 4),
+        ),
+        centerTitle: true,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: Text(
-              "Settings",
-              style: TextStyle(
-                  fontSize: 32,
-                  color: Theme.of(context).colorScheme.inversePrimary),
-            ),
-          ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
@@ -38,9 +36,9 @@ class SettingsScreen extends StatelessWidget {
                 Text(
                   "Dark Mode",
                   style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w500),
                 ),
                 Switch(
                   value: Provider.of<ThemeProvider>(context).isDarkMode,

@@ -20,14 +20,14 @@ class AppDrawer extends StatelessWidget {
                 size: 64, color: Theme.of(context).colorScheme.inversePrimary),
           ),
           DrawerTile(
-            title: 'Home',
+            title: 'HOME',
             leading: Icons.home_outlined,
             onTap: () {
               Navigator.pop(context);
             },
           ),
           DrawerTile(
-            title: 'Settings',
+            title: 'SETTINGS',
             leading: Icons.settings_outlined,
             onTap: () {
               Navigator.pop(context);
@@ -40,7 +40,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           DrawerTile(
-            title: 'About',
+            title: 'ABOUT',
             leading: Icons.info_outline,
             onTap: () {
               Navigator.pop(context);
