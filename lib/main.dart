@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_music/models/playlist_provider.dart';
 import 'package:mini_music/screens/home_screen.dart';
 import 'package:mini_music/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => PlaylistProvider()),
       ],
       child: const MyApp(),
     ),
