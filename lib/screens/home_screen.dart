@@ -24,7 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void goToSong(int songIdx) {
     playlistProvider.currentSongIdx = songIdx;
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const SongScreen()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SongScreen(),
+      ),
+    );
   }
 
   @override

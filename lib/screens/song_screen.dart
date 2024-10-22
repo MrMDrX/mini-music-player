@@ -6,6 +6,12 @@ import 'package:provider/provider.dart';
 class SongScreen extends StatelessWidget {
   const SongScreen({super.key});
 
+  String formatDuration(Duration duration) {
+    String twoDigitSeconds =
+        duration.inSeconds.remainder(60).toString().padLeft(2, "0");
+    return "${duration.inMinutes}:$twoDigitSeconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(builder: (context, value, child) {
@@ -92,15 +98,15 @@ class SongScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("00:00"),
-                          Icon(Icons.shuffle_rounded, size: 28),
-                          Icon(Icons.repeat_rounded, size: 28),
-                          Text("03:45"),
+                          Text(formatDuration(value.currentDuration)),
+                          const Icon(Icons.shuffle_rounded, size: 28),
+                          const Icon(Icons.repeat_rounded, size: 28),
+                          Text(formatDuration(value.totalDuration)),
                         ],
                       ),
                     ),
@@ -108,13 +114,21 @@ class SongScreen extends StatelessWidget {
                       data: SliderTheme.of(context).copyWith(
                         thumbShape:
                             const RoundSliderThumbShape(enabledThumbRadius: 4),
+                        overlayShape:
+                            const RoundSliderOverlayShape(overlayRadius: 16),
+                        trackHeight: 2,
+                        inactiveTrackColor:
+                            Theme.of(context).colorScheme.inversePrimary,
                       ),
                       child: Slider(
                         min: 0,
-                        max: 100,
-                        value: 50,
+                        max: value.totalDuration.inSeconds.toDouble(),
+                        value: value.currentDuration.inSeconds.toDouble(),
                         activeColor: Colors.blueAccent,
-                        onChanged: (value) {},
+                        onChanged: (double val) {},
+                        onChangeEnd: (double val) {
+                          value.seek(Duration(seconds: val.toInt()));
+                        },
                       ),
                     )
                   ],
@@ -124,37 +138,45 @@ class SongScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
-                      child: NeuBox(
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
+                      child: GestureDetector(
+                          onTap: () {
+                            value.playPreviousSong();
+                          },
+                          child: const NeuBox(
+                            child: Icon(
                               Icons.skip_previous_rounded,
                               size: 32,
-                            )),
-                      ),
+                            ),
+                          )),
                     ),
                     const SizedBox(width: 24),
                     Expanded(
                       flex: 2,
-                      child: NeuBox(
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.play_arrow_rounded,
+                      child: GestureDetector(
+                          onTap: () {
+                            value.pauseOrResume();
+                          },
+                          child: NeuBox(
+                            child: Icon(
+                              value.isPlaying
+                                  ? Icons.pause_rounded
+                                  : Icons.play_arrow_rounded,
                               size: 32,
-                            )),
-                      ),
+                            ),
+                          )),
                     ),
                     const SizedBox(width: 24),
                     Expanded(
-                      child: NeuBox(
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
+                      child: GestureDetector(
+                          onTap: () {
+                            value.playNextSong();
+                          },
+                          child: const NeuBox(
+                            child: Icon(
                               Icons.skip_next_rounded,
                               size: 32,
-                            )),
-                      ),
+                            ),
+                          )),
                     ),
                   ],
                 ),
